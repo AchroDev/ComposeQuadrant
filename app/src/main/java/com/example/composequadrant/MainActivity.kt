@@ -3,10 +3,13 @@ package com.example.composequadrant
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
+
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
+
+import androidx.compose.foundation.layout.Row
+
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -33,7 +37,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-
+                    ComposeQuadrantApp()
                 }
             }
         }
@@ -42,55 +46,62 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ComposeQuadrantApp() {
-    ComposeQuadrant(
-        tcomposable = stringResource(R.string.text_composable),
-        tcomdesc = stringResource(R.string.text_composable_description),
-        icomposable = stringResource(R.string.image_composable),
-        icomdesc = stringResource(R.string.image_composable_description),
-        rcomposable = stringResource(R.string.row_composable),
-        rcomdesc = stringResource(R.string.raw_composable_description),
-        ccomsosable = stringResource(R.string.column_composable),
-        ccomdesc = stringResource(R.string.column_composable_description)
-    )
+    Column(Modifier.fillMaxWidth()) {
+        Row(Modifier.weight(1f)) {
+            ComposableQuadrant(
+                title = stringResource(R.string.text_composable),
+                description = stringResource(R.string.text_composable_description),
+                backgroundColor = Color(0xFFEADDFF),
+                modifier = Modifier.weight(1f)
+            )
+            ComposableQuadrant(
+                title = stringResource(R.string.image_composable),
+                description = stringResource(R.string.image_composable_description),
+                backgroundColor = Color(0xFFD0BCFF),
+                modifier = Modifier.weight(1f)
+            )
+        }
+        Row(Modifier.weight(1f)) {
+            ComposableQuadrant(
+                title = stringResource(R.string.row_composable),
+                description = stringResource(R.string.row_composable_description),
+                backgroundColor = Color(0xFFB69DF8),
+                modifier = Modifier.weight(1f)
+            )
+            ComposableQuadrant(
+                title = stringResource(R.string.column_composable),
+                description = stringResource(R.string.column_composable_description),
+                backgroundColor = Color(0xFFF6EDFF),
+                modifier = Modifier.weight(1f)
+            )
+        }
+    }
 }
 
 @Composable
-private fun ComposeQuadrant(
-    tcomposable: String,
-    tcomdesc: String,
-    icomposable: String,
-    icomdesc: String,
-    rcomposable: String,
-    rcomdesc: String,
-    ccomsosable: String,
-    ccomdesc: String,
-    modifier: Modifier = Modifier,
-
+private fun ComposableQuadrant(
+    title: String,
+    description: String,
+    backgroundColor: Color,
+    modifier: Modifier = Modifier
 ) {
-    Box(
-        modifier = Modifier.fillMaxSize()
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(backgroundColor)
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = modifier
-                .fillMaxWidth(0.5f)
-                .fillMaxHeight(0.5f)
-                .padding(16.dp),
-
-        ){
-            Text(
-                text = tcomposable,
-                fontWeight = FontWeight.Bold,
-                modifier = modifier
-                    .padding(bottom = 16.dp),
-            )
-            Text(
-                text = tcomdesc,
-                textAlign = TextAlign.Justify
-            )
-        }
-
+        Text(
+            text = title,
+            modifier = Modifier.padding(bottom = 16.dp),
+            fontWeight = FontWeight.Bold
+        )
+        Text(
+            text = description,
+            textAlign = TextAlign.Justify
+        )
     }
 }
 
